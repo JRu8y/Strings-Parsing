@@ -1,8 +1,15 @@
 package driverslicense;
 
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static java.lang.Boolean.parseBoolean;
 
 public class DriversLicense {
 
@@ -10,9 +17,11 @@ public class DriversLicense {
 
     private int height;
     private double weight;
+    private String objectName;
     private char licenseClassification, sex;
     private boolean organDonor, federallyCompliant;
     private Date dateOfBirth, issueDate, expirationDate;
+    private ArrayList<DriversLicense> deserializedList = new ArrayList<DriversLicense>();
 
     //private Restriction[] restrictions;
 
@@ -100,6 +109,10 @@ public class DriversLicense {
         return name;
     }
 
+    public ArrayList<DriversLicense> getDeserializedList() {
+        return deserializedList;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -140,6 +153,7 @@ public class DriversLicense {
         return eyeColor;
     }
 
+
     public void setEyeColor(String eyeColor) {
         this.eyeColor = eyeColor;
     }
@@ -173,8 +187,24 @@ public class DriversLicense {
                 "LICENSE NUMBER,STATE,ENDORSEMENTS,SEX,FEDERAL COMPLIANCE,CLASSIFICATION";
     }
 
-    public static List<DriversLicense> deserializeCSV(String file){
-        return null;
+    public static ArrayList<DriversLicense> deserializeCSV(String file) {
+        DriversLicense objectName  = new DriversLicense();
+        ArrayList<DriversLicense> array = new ArrayList<DriversLicense>();
+        String[] deCSV = file.split(",");
+        objectName.setName(deCSV[0]);
+        objectName.setAddress(deCSV[1]);
+        objectName.setEyeColor(deCSV[2]);
+        objectName.setDateOfBirth(new Date(deCSV[3]));
+        objectName.setIssueDate(new Date(deCSV[4]));
+        objectName.setExpirationDate(new Date(deCSV[5]));
+        objectName.setLicenseNumber(deCSV[6]);
+        objectName.setIssuingState(deCSV[7]);
+        objectName.setEndorsements(deCSV[8]);
+        objectName.setSex(deCSV[9].charAt(0));
+        objectName.setFederallyCompliant(parseBoolean(deCSV[10]));
+        objectName.setLicenseClassification(deCSV[11].charAt(0));
+        array.add(objectName);
+        return array;
 
     }
 

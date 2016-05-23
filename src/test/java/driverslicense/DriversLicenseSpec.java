@@ -1,8 +1,10 @@
 package driverslicense;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -70,5 +72,21 @@ public class DriversLicenseSpec {
         String actualHeader = DriversLicense.getCSVHeader();
 
         assertEquals(expectedHeader, actualHeader);
+    }
+
+    @Test
+    public void deserializeCSVTest(){
+
+        ArrayList<DriversLicense> array = new ArrayList<DriversLicense>();
+
+        String CSVResult = testLicense.serializeToCSV();
+        array = DriversLicense.deserializeCSV(CSVResult);
+        String expectedValue = "Mike Jones";
+        String actualValue =  array.get(0).getName();
+        Assert.assertEquals("The names should be equal, expected value: Mike Jones", expectedValue, actualValue);
+
+
+
+
     }
 }
